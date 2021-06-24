@@ -1,0 +1,176 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Hadoop Hue</h1>
+  <p class="mb-4">
+    Hue 是 Hadoop 上的資料瀏覽工具，功能類似 SAS-EG的資料館，大家可以在裡面下
+    SQL 語法撈取資料檢視。
+  </p>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <a
+        href="https://88.248.13.3:8888"
+        class="btn btn-success btn-icon-split"
+        target="_blank"
+      >
+        <span class="icon text-white-50">
+          <i class="fas fa-fw fa-chart-area"></i>
+        </span>
+        <span class="text">Hadoop Hue 連結</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bolder" style="font-size: 1.5rem">使用說明</h6>
+    </div>
+    <div class="card-body">
+      <div>
+        <h2 id="-">連線使用</h2>
+        <div style="padding: 10px">
+          <ul>
+            <li>
+              網址為
+              <code>https://88.248.13.3:8888</code
+              >，登入若出現連線警告，此乃正常現象，請點擊 <code>進階</code> &gt;
+              <code>繼續前往</code>。
+            </li>
+            <li>
+              登入帳號為 <code>員工編號cxl</code> ，例如
+              <code>00123456cxl</code>，密碼初始為 <code>Trustsam0</code>。
+            </li>
+            <li>
+              密碼可以至 VDI 外面使用瀏覽器連
+              <code>http://10.75.28.3/pwd</code> 進行更改。
+            </li>
+          </ul>
+          <img
+            src="{{ url_for('static', filename='img/hue/cfhdom.jpg') }}"
+            alt="cfhdom"
+          />
+        </div>
+        <div style="padding: 10px">
+          <h4 id="-">帳號申請</h4>
+          <p>
+            目前只要在 2021/01/01
+            前到部的成員，皆已申請帳號，若無法登入請聯繫工程組成員。
+          </p>
+        </div>
+      </div>
+      <hr style="padding: 10px" />
+      <div>
+        <h2 id="-">介面說明</h2>
+        <p>
+          <img
+            src="{{ url_for('static', filename='img/hue/gui.png') }}"
+            alt="gui"
+            style="max-width: 1000px"
+          />
+        </p>
+        <div style="padding: 10px">
+          <h4 id="query-editor">Query Editor</h4>
+          <ul>
+            <li>
+              裡面可以選擇 <code>Impala</code> 及
+              <code>Hive</code>，差異在於執行 SQL 的框架不一樣，<code
+                >Impala</code
+              >
+              會比較快一點，但資料會與
+              <code>Hive</code> 有八小時時間差，建議初學者使用
+              <code>Hive</code> 即可。
+            </li>
+            <li>
+              <code>Scheduler</code> 可以建立自己的 SQL 排程，但因有 Bug
+              嚴正建議不要使用。
+            </li>
+          </ul>
+        </div>
+
+        <div style="padding: 10px">
+          <h4 id="data-sources-">Data Sources 資料庫</h4>
+          <ul>
+            <li>
+              類似於 SAS-EG 資料館的架構，可以分為以下 DB：
+              <ol>
+                <li>
+                  <code>cxl_v_user_9hxxx</code>：資料視圖 - 各科在 TD
+                  上有權限的資料表，包含自主及
+                  CR2.0，若無權限使用，請先申請自主資料庫權限，通過後會自動導入，該
+                  DB 只能讀不能寫。
+                </li>
+                <li>
+                  <code>cxl_user_9hxxx</code>：單位視圖 - 各科可以自由新修刪
+                  Table 的地區，請各科透過 schema
+                  的設計，也就是表頭設計來區分不同業務，如
+                  <code>Risk_score.20210101ABT</code> 表示風險分資料，該 DB
+                  各科可以讀寫修改。
+                </li>
+                <li>
+                  <code>cxl_fs_user</code>：Feature Store -
+                  存放資料的歷史檔、模型 ABT、HAP 定期運算數據等，非 TD
+                  原生資料的分析資料都會在此，該 DB 只能讀不能寫。
+                </li>
+                <li>
+                  <code>cfh2cxl</code>：金控資料 - 由金控提供的跨子公司資料，該
+                  DB 只能讀不能寫。
+                </li>
+              </ol>
+            </li>
+            <li>如果沒有看到該資料庫，代表還未開放。</li>
+            <li>
+              在使用單位視圖
+              <code>cxl_user_9hxxx</code> 時，請務必注意不要誤刪別人的 Table。
+            </li>
+            <li>
+              資料表可以用拖拉的方式到 SQL 撰寫區，會自動變成 `SELECT SCRIPT`。
+            </li>
+          </ul>
+        </div>
+        <div style="padding: 10px">
+          <h4 id="sql-">SQL 撰寫區</h4>
+          <ul>
+            <li>
+              該區可以撰寫 <code>Hive SQL</code> 語法，這邊的內容與透過
+              <code>Jupyter</code> 使用
+              <code>spark.sql()</code> 函數篩選資料是一樣的語法。
+            </li>
+            <li>
+              <code>Hive SQL</code> 如果執行較
+              <code>spark.sql()</code>
+              慢屬於正常現象，兩個的底層運作機制不一樣，<code>Hive</code> 是透過
+              <code>mapreduce</code> 處理資料。
+            </li>
+            <li>快捷鍵 <code>Ctrl+Enter</code> 可以執行 SQL 語法。</li>
+          </ul>
+        </div>
+        <div style="padding: 10px">
+          <h4 id="-">結果顯示區</h4>
+          <ul>
+            <li>
+              Hue 的顯示結果可以直接輸出成 csv/txt，可以透過 VDI
+              攜出表單，將檔案攜出 VDI。
+            </li>
+            <li>
+              VDI 攜出僅能在 VDI 的
+              <code>AP pool</code> 運行，可以先丟到個人的網路空間，再開 AP
+              攜出。
+            </li>
+            <li>
+              目前因為 Hue 本身的 Bug，日期欄位會顯示
+              <code>String</code>，但不影響篩選、加減、計算等，即使透過
+              <code>spark.sql()</code> 篩選也不影響操作。
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <p>The end ...</p>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+{% endblock %}

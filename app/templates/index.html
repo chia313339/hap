@@ -1,0 +1,492 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+  </div>
+
+  <!-- Content Row -->
+  <div class="row">
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="font-weight-bold text-primary text-uppercase mb-1">
+                自主資料庫資料
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{aqh_table}} Table
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-database fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="font-weight-bold text-success text-uppercase mb-1">
+                CR2.0 客戶單一資料庫
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{scr_table}} Table
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-user-friends fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="font-weight-bold text-info text-uppercase mb-1">
+                HAP 倉儲數據導入率
+              </div>
+              <div class="row no-gutters align-items-center">
+                <div class="col-auto">
+                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                    {{td2hap_rate}}%
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="progress progress-sm mr-2">
+                    <div
+                      class="progress-bar bg-info"
+                      role="progressbar"
+                      style="width: 56%"
+                      aria-valuenow="{{td2hap_rate}}"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="font-weight-bold text-warning text-uppercase mb-1">
+                Feature Store
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{fs_table}} Table
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-store fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-4"> 
+      <!-- <div id="main" style="width: 600px;height:400px;"></div> -->
+    </div>
+    
+  </div>
+
+ 
+
+  <!-- Dashboard 區塊 -->
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card shadow md-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold">HAP 資料表統計</h6>
+        </div>
+        <div class="card-body">
+          <div id="table_stat" style="height: 400px; width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold">Jupyter 環境數量</h6>
+        </div>
+        <div class="card-body">
+            <div id="jupyter_stat" style="height: 400px; width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+        <div div class="card shadow md-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold">Cluster 運算資源</h6>
+          </div>
+          <div class="card-body">
+            <div id="cluster_source" style="height: 300px; width: 100%;"></div>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+      <div div class="card shadow md-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold">還不知道放啥</h6>
+        </div>
+        <div class="card-body">
+          <div id="sample" style="height: 300px; width: 100%;"></div>
+        </div>
+      </div>
+  </div>
+  </div>
+</div>
+
+
+
+
+
+<script>
+// table_rate_plot
+function jupyter_num_plot(){
+  let data = {{jupyter_num|tojson}};
+  let chart_plot = echarts.init(document.getElementById('jupyter_stat'));
+  let option = {
+    tooltip: {
+        trigger: 'item'
+    },
+    legend: {
+        top: '5%',
+        textStyle: {
+            fontSize: '13'
+        },
+        left: 'center'
+    },
+    color:['#4e73df','#1cc88a','#36b9cc'],
+    series: [
+        {
+            name: 'Table 數量',
+            type: 'pie',
+            radius: ['60%', '80%'],
+            avoidLabelOverlap: false,
+            top:'15%',
+            itemStyle: {
+                borderRadius: 0,
+                borderColor: '#fff',
+                borderWidth: 2
+            },
+            label: {
+                show: false,
+                position: 'center'
+            },
+            emphasis: {
+                label: {
+                    show: true,
+                    fontSize: '20',
+                    fontWeight: 'bold'
+                }
+            },
+            labelLine: {
+                show: false
+            },
+            data: [
+                {value: data["9h001"], name: '客戶智能科'},
+                {value: data["9h002"], name: '商業智能科'},
+                {value: data["9h000"], name: '數據經營部'}
+            ]
+        }
+    ]
+  };
+  chart_plot.setOption(option);
+  window.addEventListener('resize',function(){
+    chart_plot.resize();
+  });
+};
+
+// table_stat_plot
+function table_stat_plot(){
+  let data = {{hive_table_stat|tojson}};
+  let chart_plot = echarts.init(document.getElementById('table_stat'));
+  let option = {
+    title: {
+        text: ''
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            label: {
+                backgroundColor: '#6a7985'
+            }
+        }
+    },
+    legend: {
+        data: ['自主分析資料庫', 'CR客戶單一資料庫', 'Feature Store', '客戶智能科', '商業智能科', '數據經營部']
+    },
+    // toolbox: {
+    //     feature: {
+    //         saveAsImage: {}
+    //     }
+    // },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: [
+        {
+            type: 'category',
+            boundaryGap: false,
+            data: data['date']
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value'
+        }
+    ],
+    series: [
+        {
+            name: '自主分析資料庫',
+            type: 'line',
+            stack: '總量',
+            areaStyle: {},
+            emphasis: {
+                focus: 'series'
+            },
+            smooth: true,
+            data: data['table_ahq']
+        },
+        {
+            name: 'CR客戶單一資料庫',
+            type: 'line',
+            stack: '總量',
+            areaStyle: {},
+            emphasis: {
+                focus: 'series'
+            },
+            smooth: true,
+            data: data['table_scr']
+        },
+        {
+            name: 'Feature Store',
+            type: 'line',
+            stack: '總量',
+            areaStyle: {},
+            emphasis: {
+                focus: 'series'
+            },
+            smooth: true,
+            data: data['table_fs']
+        },
+        {
+            name: '客戶智能科',
+            type: 'line',
+            stack: '總量',
+            areaStyle: {},
+            emphasis: {
+                focus: 'series'
+            },
+            smooth: true,
+            data: data['table_9h001']
+        },
+        {
+            name: '商業智能科',
+            type: 'line',
+            stack: '總量',
+            areaStyle: {},
+            emphasis: {
+                focus: 'series'
+            },
+            smooth: true,
+            data: data['table_9h002']
+        },
+        {
+            name: '數據經營部',
+            type: 'line',
+            stack: '總量',
+            areaStyle: {},
+            emphasis: {
+                focus: 'series'
+            },
+            smooth: true,
+            data: data['table_9h000']
+        }
+    ]
+};
+
+  chart_plot.setOption(option);
+  window.addEventListener('resize',function(){
+    chart_plot.resize();
+  });
+};
+
+// cluster memory
+function cluster_mem_plot(){
+    let data = {{cluster_mem|tojson}};
+    let chart_plot = echarts.init(document.getElementById('cluster_source'));
+    let option = {
+    series: [{
+        type: 'gauge',
+        axisLine: {
+            lineStyle: {
+                width:10,
+                color: [
+                    [0.3, '#67e0e3'],
+                    [0.7, '#37a2da'],
+                    [1, '#fd666d']
+                ]
+            }
+        },
+        pointer: {
+            itemStyle: {
+                color: 'auto'
+            }
+        },
+        axisTick: {
+            distance: -30,
+            length: 8,
+            lineStyle: {
+                color: '#fff',
+                width: 2
+            }
+        },
+        splitLine: {
+            distance: -30,
+            length: 30,
+            lineStyle: {
+                color: '#fff',
+                width: 4
+            }
+        },
+        axisLabel: {
+            color: 'auto',
+            distance: 15,
+            fontSize: 10
+        },
+        detail: {
+            valueAnimation: true,
+            formatter: '{value} %',
+            color: 'auto'
+        },
+        data: [{
+            value: data
+        }]
+    }]
+};
+  
+    chart_plot.setOption(option);
+    window.addEventListener('resize',function(){
+      chart_plot.resize();
+    });
+  };
+
+  //sample
+  function sample_plot(){
+    let chart_plot = echarts.init(document.getElementById('sample'));
+    let data = [{
+    name: 'Grandpa',
+    children: [{
+        name: 'Uncle Leo',
+        value: 15,
+        children: [{
+            name: 'Cousin Jack',
+            value: 2
+        }, {
+            name: 'Cousin Mary',
+            value: 5,
+            children: [{
+                name: 'Jackson',
+                value: 2
+            }]
+        }, {
+            name: 'Cousin Ben',
+            value: 4
+        }]
+    }, {
+        name: 'Father',
+        value: 10,
+        children: [{
+            name: 'Me',
+            value: 5
+        }, {
+            name: 'Brother Peter',
+            value: 1
+        }]
+    }]
+}, {
+    name: 'Nancy',
+    children: [{
+        name: 'Uncle Nike',
+        children: [{
+            name: 'Cousin Betty',
+            value: 1
+        }, {
+            name: 'Cousin Jenny',
+            value: 2
+        }]
+    }]
+}];
+
+let option = {
+    series: {
+        type: 'sunburst',
+        // emphasis: {
+        //     focus: 'ancestor'
+        // },
+        data: data,
+        radius: [0, '100%'],
+        label: {
+            rotate: 'radial'
+        }
+    }
+};
+  
+    chart_plot.setOption(option);
+    window.addEventListener('resize',function(){
+      chart_plot.resize();
+    });
+  };
+
+
+jupyter_num_plot();
+table_stat_plot();
+cluster_mem_plot();
+sample_plot();
+
+
+</script>
+
+
+
+
+
+{% endblock %}
